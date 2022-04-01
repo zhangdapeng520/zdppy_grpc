@@ -9,10 +9,16 @@ def run():
 
     # 调用 rpc 服务
     stub = password_pb2_grpc.ServerAesStub(channel)
+    data = "abc 123 张大鹏 *&^"
+    print("原始：", data)
 
-    # 发送请求获取响应
-    response = stub.Encrypt(password_pb2.EncryptRequest(base64_data='张大鹏'))
-    print("接收到服务器消息：" + response.base64_encrypt)
+    # 发送加密请求
+    response = stub.EncryptString(password_pb2.EncryptStringRequest(data=data))
+    print("加密：" + response.base64_encrypt)
+
+    # 发送解密请求
+    response = stub.DecryptString(password_pb2.DecryptStringRequest(base64_encrypt=response.base64_encrypt))
+    print("解密：" + response.decrypt_data)
 
 
 if __name__ == '__main__':

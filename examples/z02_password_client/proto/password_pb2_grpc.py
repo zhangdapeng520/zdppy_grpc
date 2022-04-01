@@ -21,6 +21,16 @@ class ServerAesStub(object):
                 request_serializer=password__pb2.EncryptRequest.SerializeToString,
                 response_deserializer=password__pb2.EncryptResponse.FromString,
                 )
+        self.EncryptString = channel.unary_unary(
+                '/ServerAes/EncryptString',
+                request_serializer=password__pb2.EncryptStringRequest.SerializeToString,
+                response_deserializer=password__pb2.EncryptStringResponse.FromString,
+                )
+        self.DecryptString = channel.unary_unary(
+                '/ServerAes/DecryptString',
+                request_serializer=password__pb2.DecryptStringRequest.SerializeToString,
+                response_deserializer=password__pb2.DecryptStringResponse.FromString,
+                )
 
 
 class ServerAesServicer(object):
@@ -35,6 +45,20 @@ class ServerAesServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def EncryptString(self, request, context):
+        """加密字符串
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def DecryptString(self, request, context):
+        """加密字符串
+        """
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_ServerAesServicer_to_server(servicer, server):
     rpc_method_handlers = {
@@ -42,6 +66,16 @@ def add_ServerAesServicer_to_server(servicer, server):
                     servicer.Encrypt,
                     request_deserializer=password__pb2.EncryptRequest.FromString,
                     response_serializer=password__pb2.EncryptResponse.SerializeToString,
+            ),
+            'EncryptString': grpc.unary_unary_rpc_method_handler(
+                    servicer.EncryptString,
+                    request_deserializer=password__pb2.EncryptStringRequest.FromString,
+                    response_serializer=password__pb2.EncryptStringResponse.SerializeToString,
+            ),
+            'DecryptString': grpc.unary_unary_rpc_method_handler(
+                    servicer.DecryptString,
+                    request_deserializer=password__pb2.DecryptStringRequest.FromString,
+                    response_serializer=password__pb2.DecryptStringResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -69,5 +103,39 @@ class ServerAes(object):
         return grpc.experimental.unary_unary(request, target, '/ServerAes/Encrypt',
             password__pb2.EncryptRequest.SerializeToString,
             password__pb2.EncryptResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def EncryptString(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ServerAes/EncryptString',
+            password__pb2.EncryptStringRequest.SerializeToString,
+            password__pb2.EncryptStringResponse.FromString,
+            options, channel_credentials,
+            insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
+
+    @staticmethod
+    def DecryptString(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(request, target, '/ServerAes/DecryptString',
+            password__pb2.DecryptStringRequest.SerializeToString,
+            password__pb2.DecryptStringResponse.FromString,
             options, channel_credentials,
             insecure, call_credentials, compression, wait_for_ready, timeout, metadata)
