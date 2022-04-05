@@ -1,0 +1,32 @@
+syntax = "proto3"; // proto版本
+option go_package = "../proto"; // package包名
+
+// 验证码服务
+service ServerCaptcha {// 服务名
+  rpc Create (CreateRequest) returns (CreateResponse); // 创建验证码
+  rpc Verify (VerifyRequest) returns (VerifyResponse); // 验证验证码
+}
+
+// 创建验证码请求
+message CreateRequest {
+  string ctype = 1; // 验证码类型：digit,math,chinese
+}
+
+// 创建验证码的响应
+message CreateResponse {
+  string id = 1; // id
+  string question = 2; // 问题
+}
+
+
+// 校验验证码请求
+message VerifyRequest {// 方法请求
+  string id = 1; // 验证码ID
+  string ctype = 2; // 验证码类型
+  string answer = 3; // 验证码答案
+}
+
+// 校验验证码响应
+message VerifyResponse {// 方法响应
+  bool status = 1; // 校验结果
+}
