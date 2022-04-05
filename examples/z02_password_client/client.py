@@ -8,7 +8,7 @@ def run():
     channel = grpc.insecure_channel('localhost:50051')
 
     # 调用 rpc 服务
-    stub = password_pb2_grpc.ServerAesStub(channel)
+    stub = password_pb2_grpc.ServerPasswordStub(channel)
     data = "abc 123 张大鹏 *&^"
     print("原始：", data)
 
