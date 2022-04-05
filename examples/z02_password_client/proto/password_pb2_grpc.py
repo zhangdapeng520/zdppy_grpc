@@ -2,7 +2,7 @@
 """Client and server classes corresponding to protobuf-defined services."""
 import grpc
 
-from . import password_pb2 as password__pb2
+import password_pb2 as password__pb2
 
 
 class ServerAesStub(object):

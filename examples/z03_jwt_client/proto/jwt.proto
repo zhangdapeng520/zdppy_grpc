@@ -1,0 +1,50 @@
+syntax = "proto3"; // proto版本
+option go_package = "../proto"; // package包名
+
+// Jwt身份校验服务
+service ServerJwt {// 服务名
+  rpc CreateToken (CreateTokenRequest) returns (CreateTokenResponse); // 创建token
+  rpc ParseToken (ParseTokenRequest) returns (ParseTokenResponse); // 解析token
+  rpc RefreshToken (RefreshTokenRequest) returns (RefreshTokenResponse); // 刷新token
+}
+
+// 创建token请求
+message CreateTokenRequest {// 方法请求
+  int64 user_id = 1; // 用户ID
+  string username = 2; // 用户名
+  string usertype = 3; // 用户类型
+  int32 role = 4; // 用户角色
+  string json_data = 5; // 数据，json序列化的字符串
+}
+
+// 创建token的响应
+message CreateTokenResponse {// 方法响应
+  string token = 1; // token字符串
+}
+
+
+// 解析token请求
+message ParseTokenRequest {// 方法请求
+  string token = 1; // token字符串
+}
+
+// 解析token的响应
+message ParseTokenResponse {// 方法响应
+  int64 user_id = 1; // 用户ID
+  string username = 2; // 用户名
+  string usertype = 3; // 用户类型
+  int32 role = 4; // 用户角色
+  string json_data = 5; // 数据，json序列化的字符串
+}
+
+
+// 刷新token的请求
+message RefreshTokenRequest {// 方法请求
+  string token = 1; // token字符串
+}
+
+// 刷新token的响应
+message RefreshTokenResponse {// 方法响应
+  string token = 1; // token字符串
+}
+
